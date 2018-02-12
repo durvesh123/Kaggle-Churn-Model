@@ -8,13 +8,11 @@ from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.cross_validation import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
-from sklearn.metrics import explained_variance_score
-
 
 
 #loading train data set
 
-data = pd.read_csv('/Users/durveshvedak/Downloads/Kaggle Churn/train.csv',header=0)
+data = pd.read_csv('/Users/durveshvedak/Downloads/train.csv',header=0)
 
 
 data.COLLEGE = data.COLLEGE.replace({"one":int(1),"zero":int(0)})
@@ -40,7 +38,6 @@ data.CONSIDERING_CHANGE_OF_PLAN = data.CONSIDERING_CHANGE_OF_PLAN.replace(
                                     "no":int(100)}
 
                                     )
-
 
 #load test data
 data_test_all = pd.read_csv('/Users/durveshvedak/Downloads/Kaggle Churn/test.csv',header=0)
@@ -69,7 +66,6 @@ data_test_all.CONSIDERING_CHANGE_OF_PLAN = data_test_all.CONSIDERING_CHANGE_OF_P
                                     )
 
 
-
 # Training data
 X = data.iloc[:,0:11]
 Y = data.iloc[:,11]
@@ -80,8 +76,7 @@ Y = data.iloc[:,11]
 X = preprocessing.normalize(X)
 X = preprocessing.scale(X)
 
-x_train,x_test,y_train,y_test=train_test_split(X,Y,test_size=0.09,random_state=4)
-
+x_train,x_test,y_train,y_test=train_test_split(X,Y,test_size=0,random_state=4)
 
 
 #actual test
@@ -91,21 +86,15 @@ X_test = preprocessing.scale(X_test)
 
 
 #Initialize Model
-model = SVC(kernel='rbf',class_weight='balanced')
-weights = [2.0/3]*x_train.shape[0]
-model.fit(x_train, y_train,sample_weight=weights)
+logististicModel = SVC()
+logististicModel.fit(x_train, y_train)
 
 
-predictions = model.predict(x_test)
-
-"""
-predictions = model.predict(X_test)
-
+predictions = logististicModel.predict(X_test)
 print(predictions[:10])
 print(len(predictions))
 with open('/Users/durveshvedak/Downloads/Kaggle Churn/results.txt','w') as f:
     for i in predictions:
         f.write(str(i)+"\n")
-"""
 
-print(accuracy_score(y_test,predictions))
+#print(accuracy_score(y_test,predictions))
