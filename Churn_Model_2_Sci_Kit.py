@@ -80,7 +80,7 @@ Y = data.iloc[:,11]
 X = preprocessing.normalize(X)
 X = preprocessing.scale(X)
 
-x_train,x_test,y_train,y_test=train_test_split(X,Y,test_size=0.09,random_state=4)
+x_train,x_test,y_train,y_test=train_test_split(X,Y,test_size=0.2,random_state=42)
 
 
 
@@ -91,9 +91,9 @@ X_test = preprocessing.scale(X_test)
 
 
 #Initialize Model
-model = SVC(kernel='rbf',class_weight='balanced')
-weights = [2.0/3]*x_train.shape[0]
-model.fit(x_train, y_train,sample_weight=weights)
+model = SVC(kernel='rbf',class_weight='balanced', C=2.0)
+#weights = [2.0/3]*x_train.shape[0]
+model.fit(x_train, y_train)
 
 
 predictions = model.predict(x_test)
