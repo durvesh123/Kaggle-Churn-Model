@@ -108,4 +108,5 @@ with open('/Users/durveshvedak/Downloads/Kaggle Churn/results.txt','w') as f:
         f.write(str(i)+"\n")
 """
 
+
 print(accuracy_score(y_test,predictions))
