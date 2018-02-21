@@ -4,7 +4,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn import preprocessing
 from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
+
 
 #loading train data set
 
@@ -19,7 +19,6 @@ data.REPORTED_USAGE_LEVEL = le.fit(data.REPORTED_USAGE_LEVEL).transform(data.REP
 data.CONSIDERING_CHANGE_OF_PLAN = le.fit(data.CONSIDERING_CHANGE_OF_PLAN).transform(data.CONSIDERING_CHANGE_OF_PLAN)
 
 
-
 #load test data and encoding
 data_test_all = pd.read_csv('/Users/durveshvedak/Downloads/Kaggle Churn/test.csv',header=0)
 le = preprocessing.LabelEncoder()
@@ -31,7 +30,7 @@ data_test_all.CONSIDERING_CHANGE_OF_PLAN = le.fit(data_test_all.CONSIDERING_CHAN
 #Standard Scaler
 scaler = StandardScaler()
 
-#actual test
+#actual test data
 X_test = data_test_all.iloc[:,0:11]
 X_test = scaler.fit_transform(X_test)
 
@@ -39,28 +38,35 @@ X_test = scaler.fit_transform(X_test)
 #Train and Test Data
 X = data.iloc[:,0:11]
 Y = data.iloc[:,11]
+
 X = scaler.fit_transform(X)
 
 
 
+#Split train and test data
 x_train,x_test,y_train,y_test=train_test_split(X,Y,test_size=0.2,random_state=42)
 
 
 #Decision Tree
 
-clf_gini = DecisionTreeClassifier(criterion = "entropy", random_state = 42,
-                               max_depth=4, min_samples_leaf=20,min_samples_split=2,class_weight='balanced')
+clf_gini = DecisionTreeClassifier(criterion = "entropy", random_state = 100,
+                                  max_depth=4, min_samples_leaf=100,
+                                  min_samples_split=10,class_weight='balanced')
 clf_gini.fit(x_train, y_train)
-
-
 y_pred = clf_gini.predict(x_test)
 
-'''
+
+print ("Accuracy is ", accuracy_score(y_test,y_pred)*100)
+
+"""
+#Write output labels
 with open('/Users/durveshvedak/Downloads/Kaggle Churn/results.txt','w') as f:
     for i in y_pred:
         f.write(str(i)+"\n")
-'''
-print ("Accuracy is ", accuracy_score(y_test,y_pred)*100)
+"""
+
+
+
 
 
 
