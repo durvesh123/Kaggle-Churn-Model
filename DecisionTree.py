@@ -19,6 +19,7 @@ data.REPORTED_USAGE_LEVEL = le.fit(data.REPORTED_USAGE_LEVEL).transform(data.REP
 data.CONSIDERING_CHANGE_OF_PLAN = le.fit(data.CONSIDERING_CHANGE_OF_PLAN).transform(data.CONSIDERING_CHANGE_OF_PLAN)
 
 
+
 #load test data and encoding
 data_test_all = pd.read_csv('/Users/durveshvedak/Downloads/Kaggle Churn/test.csv',header=0)
 le = preprocessing.LabelEncoder()
@@ -53,17 +54,17 @@ clf_gini = DecisionTreeClassifier(criterion = "entropy", random_state = 100,
                                   max_depth=4, min_samples_leaf=100,
                                   min_samples_split=10,class_weight='balanced')
 clf_gini.fit(x_train, y_train)
-y_pred = clf_gini.predict(x_test)
+y_pred = clf_gini.predict(X_test)
 
 
-print ("Accuracy is ", accuracy_score(y_test,y_pred)*100)
+#print ("Accuracy is ", accuracy_score(y_test,y_pred)*100)
 
-"""
+
 #Write output labels
 with open('/Users/durveshvedak/Downloads/Kaggle Churn/results.txt','w') as f:
     for i in y_pred:
         f.write(str(i)+"\n")
-"""
+
 
 
 
